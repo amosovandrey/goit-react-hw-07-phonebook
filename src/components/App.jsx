@@ -1,11 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  addContact,
-  deleteContact,
-  selectContacts,
-} from '../redux/contactsSlice';
-import { selectFilter, setFilter } from '../redux/filterSlice';
+import { selectContacts, deleteContact, fetchContacts } from './contactsSlice';
+import { selectFilter, setFilter } from './filterSlice';
+
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
@@ -17,6 +14,10 @@ function App() {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const onAddContact = newContact => {
     dispatch(addContact(newContact));
